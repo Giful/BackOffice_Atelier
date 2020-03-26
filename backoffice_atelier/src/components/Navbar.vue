@@ -82,7 +82,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item>
-            <b-button v-on:click="deconnect" variant="danger">Se déconnecter</b-button>
+            <b-button v-on:click="deconnect" variant="danger">Déconnexion</b-button>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>

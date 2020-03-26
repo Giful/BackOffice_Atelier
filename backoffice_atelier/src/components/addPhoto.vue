@@ -3,7 +3,6 @@
     <NavBar />
     <b-card bg-variant="light">
       <b-form-group
-        @submit="ajoutPhoto"
         label-cols-lg="3"
         label="Ajouter une photo :"
         label-size="lg"
@@ -24,28 +23,32 @@
           class="w-75"
           label-cols-sm="2"
           label="Choisissez une série:"
-          label-align-sm="right"
+
           label-for="url"
         >
           <!--  -->
           <b-form-select v-model="selected" :options="tabSerie"></b-form-select>
         </b-form-group>
-        <b-form-group>
-          <b-form-select v-model="select" :options="options" class="w-25"></b-form-select>
-          <b-form-file v-if="bool" id="url" v-model="urlImage" class="w-50"></b-form-file>
-          <b-form-input v-if="!bool" v-model="urlImage" class="w-50"></b-form-input>
+        <b-form-group
+        class="w-75"
+          label-cols-sm="2"
+          label="Url de la photo:"
+          label-for="sel">
+           <b-form-file v-if="bool" id="url" v-model="urlImage" class="w-50"></b-form-file>
+          <b-form-input v-else v-model="urlImage" class="w-50"></b-form-input> 
+          <b-form-select id="sel" v-model="select" :options="options" class="w-25"></b-form-select>
         </b-form-group>
         <!-- <div class="mt-3">Selected file: {{ urlImage ? urlImage.name : '' }}</div> -->
-        <b-button pill variant="info" v-on:click="pushToImgBB">Générer une url pour l'image</b-button>
-        <b-button
-          pill
-          variant="info"
-          v-if="pos"
-          type="submit"
-          text="Valider"
-          class="btn btn-primary m-t-20"
-        >Ajouter photo</b-button>
       </b-form-group>
+      <b-button pill variant="info" v-on:click="pushToImgBB">Générer une url pour l'image</b-button>
+      <b-button
+        pill
+        variant="info"
+        v-if="pos"
+        v-on:click="ajoutPhoto"
+        text="Valider"
+        class="btn btn-primary m-t-20"
+      >Ajouter photo</b-button>
     </b-card>
     <Gmap-autocomplete class="mt-3 w-50" @place_changed="setPlace"></Gmap-autocomplete>
     <b-button pill variant="info" @click="getCoordonnees">Récupérer les Coordonnées</b-button>
@@ -118,8 +121,13 @@ export default {
   watch: {
     select: function() {
       console.log(this.select);
-      if (this.bool) this.bool = false;
-      else this.bool = true;
+      if (this.bool) {
+        this.bool = false;
+        this.urlImage = "";
+      } else {
+        this.bool = true;
+        this.urlImage = null;
+      }
     }
   },
   mounted() {
@@ -147,8 +155,7 @@ export default {
         .then(response => {
           console.log("bravo");
         })
-        .catch(err => {
-        });
+        .catch(err => {});
     },
     pushToImgBB() {
       this.file_name =
@@ -199,13 +206,13 @@ export default {
       this.dismissCountDown = dismissCountDown;
     }
   },
-  watch: {
+  /* watch: {
     series: function() {
       this.series.forEach(serie => {
-        this.tabSerie.push(serie.ville);
+        this.tabSerie.push(serie.id);
       });
     }
-  },
+  }, */
   created: function() {
     axios
       .get("http://localhost:19080/series", {
@@ -215,7 +222,7 @@ export default {
       })
       .then(response => {
         response.data.series.forEach(s => {
-          this.series.push({ id: s.serie.idSerie, ville: s.serie.ville });
+          this.tabSerie.push({ value: s.serie.idSerie, text: s.serie.ville });
         });
       })
       .catch(err => {

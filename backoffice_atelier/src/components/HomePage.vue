@@ -7,6 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav></b-collapse>
     </b-navbar>
+    <h1 class="text-center mt-5">Connexion</h1>
     <b-form style="margin:auto; width:30%;" @submit="onSubmit" class="mt-4" v-if="show">
       <b-form-group id="input-group-1" label="Entrez votre adresse mail :" label-for="input-1">
         <b-form-input id="input-1" type="email" required v-model="mail" placeholder="Enter email"></b-form-input>
