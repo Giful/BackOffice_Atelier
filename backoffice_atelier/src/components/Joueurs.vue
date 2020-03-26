@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <b-table striped hover :items="joueurData" :fields="fields"></b-table>
     <b-button pill>Page actuelle : {{this.page}}</b-button>
     <b-button pill>Nombre de pages : {{this.pageMax}}</b-button>
@@ -16,8 +17,12 @@
 
 <script>
 import axios from "axios";
+import Navbar from './Navbar'
 export default {
   name: "Parties",
+  components: {
+    Navbar
+  },
   data() {
     return {
       fields: [
@@ -33,12 +38,17 @@ export default {
       joueurData: [],
       page: 1,
       pageMax: "",
-      pageMin: ""
+      pageMin: "",
+      connected:false
     };
   },
   created: function() {
     axios
-      .get("http://localhost:19080/joueurs?page=" + this.page)
+      .get("http://localhost:19080/joueurs?page=" + this.page, {
+        headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+      })
       .then(response => {
         response.data.joueurs.forEach(j => {
           this.joueurData.push({
@@ -67,7 +77,11 @@ export default {
     afficherPagePrec() {
       this.joueurData = [];
       axios
-        .get("http://localhost:19080/joueurs?page=" + (this.page - 1))
+        .get("http://localhost:19080/joueurs?page=" + (this.page - 1), {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
           response.data.joueurs.forEach(j => {
             this.joueurData.push({
@@ -89,7 +103,11 @@ export default {
     afficherPageSuiv() {
       this.joueurData = [];
       axios
-        .get("http://localhost:19080/joueurs?page=" + (this.page + 1))
+        .get("http://localhost:19080/joueurs?page=" + (this.page + 1), {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
           response.data.joueurs.forEach(j => {
             this.joueurData.push({

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar />
     <b-table striped hover :items="partiesData" :fields="fields"></b-table>
     <b-button pill>Page actuelle : {{this.page}}</b-button>
     <b-button pill>Nombre de pages : {{this.pageMax}}</b-button>
@@ -15,8 +16,12 @@
 
 <script>
 import axios from "axios";
+import NavBar from './Navbar';
 export default {
   name: "Parties",
+  components: {
+    NavBar
+  },
   data() {
     return {
       fields: [
@@ -41,7 +46,11 @@ export default {
   },
   created: function() {
     axios
-      .get("http://localhost:19080/parties?page=" + this.page)
+      .get("http://localhost:19080/parties?page=" + this.page, {
+        headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+      })
       .then(response => {
         response.data.parties.forEach(p => {
           this.partiesData.push({
@@ -71,7 +80,11 @@ export default {
     afficherPagePrec() {
       this.partiesData = [];
       axios
-        .get("http://localhost:19080/parties?page=" + (this.page - 1))
+        .get("http://localhost:19080/parties?page=" + (this.page - 1), {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
         response.data.parties.forEach(p => {
           this.partiesData.push({
@@ -94,7 +107,11 @@ export default {
     afficherPageSuiv() {
       this.partiesData = [];
       axios
-        .get("http://localhost:19080/parties?page=" + (this.page + 1))
+        .get("http://localhost:19080/parties?page=" + (this.page + 1), {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
         response.data.parties.forEach(p => {
           this.partiesData.push({

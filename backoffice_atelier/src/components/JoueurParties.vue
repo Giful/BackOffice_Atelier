@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar/>
     <p class="mt-3">
       ID de l'utilisateur
       <input type="text" v-model="checkID" />
@@ -14,8 +15,12 @@
 
 <script>
 import axios from "axios";
+import NavBar from './Navbar';
 export default {
     name:"JoueurParties",
+    components:{
+      NavBar
+    },
   data() {
     return {
       fields: [
@@ -34,14 +39,19 @@ export default {
       ],
       checkID: 1,
       joueurPList: [],
-      bool: true
+      bool: true,
+      connected:false
     };
   },
   created: function() {
     axios
       .get(
         "http://localhost:19080/joueurs/" + this.$route.params.id + "/parties"
-      )
+      , {
+        headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+      })
       .then(response => {
         response.data.parties.forEach(pj => {
             console.log(pj.partiejoueur.score);
@@ -62,7 +72,11 @@ export default {
       axios
         .get(
           "http://localhost:19080/joueurs/" + this.$route.params.id + "/parties"
-        )
+        , {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
             this.joueurPList = [];
         response.data.parties.forEach(pj => {

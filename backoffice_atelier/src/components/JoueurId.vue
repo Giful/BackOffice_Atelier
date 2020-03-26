@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar/>
     <p class="mt-3">
       ID de l'utilisateur
       <input type="text" v-model="checkIDJ" />
@@ -14,8 +15,12 @@
 
 <script>
 import axios from "axios";
+import NavBar from './Navbar';
 export default {
   name: "JoueurId",
+  components: {
+    NavBar
+  },
   data() {
     return {
       fields: [
@@ -30,18 +35,24 @@ export default {
       ],
       checkIDJ: 1,
       joueurList: [],
-      bool:true
+      bool:true,
+      connected:false
     };
   },
   created: function() {
     axios
-        .get("http://localhost:19080/joueurs/" + this.$route.params.id)
+        .get("http://localhost:19080/joueurs/" + this.$route.params.id, {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
           this.joueurList = [];
            this.joueurList.push({
             Joueur: response.data.joueur.pseudo,
             Mail: response.data.joueur.mail
           });
+          this.checkIDJ = this.$route.params.id;
           this.bool = true;
         })
         .catch(error => {
@@ -51,7 +62,11 @@ export default {
   methods: {
     afficherJoueur() {
       axios
-        .get("http://localhost:19080/joueurs/" + this.$route.params.id)
+        .get("http://localhost:19080/joueurs/" + this.$route.params.id, {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
           this.joueurList = [];
            this.joueurList.push({

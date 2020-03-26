@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar/>
     <p class="mt-3">
       ID de la partie
       <input type="text" v-model="checkIDP" />
@@ -14,8 +15,12 @@
 
 <script>
 import axios from "axios";
+import NavBar from './Navbar';
 export default {
     name:"PartieId",
+    components : {
+      NavBar
+    },
   data() {
     return {
       fields: [
@@ -47,7 +52,11 @@ export default {
   },
   created: function() {
     axios
-      .get("http://localhost:19080/parties/" + this.$route.params.id)
+      .get("http://localhost:19080/parties/" + this.$route.params.id, {
+        headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+      })
       .then(response => {
         this.partieList = [];
         this.partieList.push({
@@ -66,7 +75,11 @@ export default {
   methods: {
     afficherPartie() {
       axios
-        .get("http://localhost:19080/parties/" + this.$route.params.id)
+        .get("http://localhost:19080/parties/" + this.$route.params.id, {
+          headers: { 
+                "Authorization": "Bearer " + this.$route.params.props.token
+            }
+        })
         .then(response => {
           this.partieList = [];
           this.partieList.push({
