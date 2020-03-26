@@ -89,7 +89,7 @@ export default {
     return {
       options: [
         { value: 0, text: "Importer une photo" },
-        { value: 1, text: "Coller le lien de la photo" }
+        { value: 1, text: "Importer une url" }
       ],
       selected: 0,
       select: 0,
@@ -148,7 +148,6 @@ export default {
           console.log("bravo");
         })
         .catch(err => {
-          console.log("ntm");
         });
     },
     pushToImgBB() {
