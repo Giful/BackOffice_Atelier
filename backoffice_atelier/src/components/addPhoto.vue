@@ -19,36 +19,44 @@
           <b-form-input id="desc" v-model="description"></b-form-input>
         </b-form-group>
 
-        <b-form-group
-          class="w-75"
-          label-cols-sm="2"
-          label="Choisissez une série:"
-
-          label-for="url"
-        >
-          <!--  -->
+        <b-form-group class="w-75" label-cols-sm="2" label="Choisissez une série:" label-for="url">
           <b-form-select v-model="selected" :options="tabSerie"></b-form-select>
         </b-form-group>
-        <b-form-group
-        class="w-75"
-          label-cols-sm="2"
-          label="Url de la photo:"
-          label-for="sel">
-           <b-form-file v-if="bool" id="url" v-model="urlImage" class="w-50"></b-form-file>
-          <b-form-input v-else v-model="urlImage" class="w-50"></b-form-input> 
+        <b-form-group class="w-75" label-cols-sm="2" label="Url de la photo:" label-for="sel">
+          <b-form-input v-if="bool" id="url" v-model="urlImage" class="w-50"></b-form-input>
+          <b-form-file v-else v-model="urlImage" class="w-50"></b-form-file>
           <b-form-select id="sel" v-model="select" :options="options" class="w-25"></b-form-select>
         </b-form-group>
         <!-- <div class="mt-3">Selected file: {{ urlImage ? urlImage.name : '' }}</div> -->
       </b-form-group>
-      <b-button pill variant="info" v-on:click="pushToImgBB">Générer une url pour l'image</b-button>
       <b-button
         pill
         variant="info"
         v-if="pos"
-        v-on:click="ajoutPhoto"
+        @click="ajoutPhoto"
         text="Valider"
         class="btn btn-primary m-t-20"
       >Ajouter photo</b-button>
+      <b-alert
+        v-if="add"
+        :show="dismissCount"
+        @dismissed="dismissCount=0"
+        @dismiss-count-down="countDown"
+        class="w-25 mx-auto h-25 mt-3"
+        variant="success"
+      >
+        <p>Photo ajoutée avec succès</p>
+      </b-alert>
+      <b-alert
+        v-else
+        :show="dismissCount"
+        @dismissed="dismissCount=0"
+        @dismiss-count-down="countDown"
+        class="w-25 mx-auto h-25 mt-3"
+        variant="danger"
+      >
+        <p>Erreur lors de l'ajout de la photo veuillez réessayer</p>
+      </b-alert>
     </b-card>
     <Gmap-autocomplete class="mt-3 w-50" @place_changed="setPlace"></Gmap-autocomplete>
     <b-button pill variant="info" @click="getCoordonnees">Récupérer les Coordonnées</b-button>
@@ -91,14 +99,15 @@ export default {
   data() {
     return {
       options: [
-        { value: 0, text: "Importer une photo" },
-        { value: 1, text: "Importer une url" }
+        { value: 0, text: "Importer une url" },
+        { value: 1, text: "Importer une photo", disabled: true }
       ],
       selected: 0,
       select: 0,
       bool: true,
       dismissSecs: 3,
       dismissCountDown: 0,
+      dismissCount: 0,
       center: { lat: 48.6865674, lng: 6.1909025 },
       markers: [],
       places: [],
@@ -111,6 +120,7 @@ export default {
       urlImage: null,
       pos: false,
       coord: false,
+      add: false,
       zoom: 5,
       file_path: "",
       task: null,
@@ -153,11 +163,13 @@ export default {
           }
         )
         .then(response => {
-          console.log("bravo");
+            this.dismissCount = this.dismissSecs;
+            this.add = true;
+          
         })
         .catch(err => {});
     },
-    pushToImgBB() {
+    /* pushToImgBB() {
       this.file_name =
         "https://blog-fr.orson.io/wp-content/uploads/2017/06/jpeg-ou-png.jpg";
       this.bodyData = new FormData();
@@ -174,7 +186,7 @@ export default {
         .catch(err => {
           console.log(err);
         });
-    },
+    }, */
     setPlace(place) {
       this.currentPlace = place;
     },
@@ -204,15 +216,11 @@ export default {
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
+    },
+    countDown(dismissCount) {
+      this.dismissCount = dismissCount;
     }
   },
-  /* watch: {
-    series: function() {
-      this.series.forEach(serie => {
-        this.tabSerie.push(serie.id);
-      });
-    }
-  }, */
   created: function() {
     axios
       .get("http://localhost:19080/series", {
@@ -225,9 +233,7 @@ export default {
           this.tabSerie.push({ value: s.serie.idSerie, text: s.serie.ville });
         });
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => {});
   }
 };
 </script>

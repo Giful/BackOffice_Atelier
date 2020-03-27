@@ -5,7 +5,7 @@
       ID de l'utilisateur
       <input type="text" v-model="checkIDJ" />
       <b-button pill variant="outline-info" v-on:click="afficherJoueur">
-        <router-link class="white" v-bind:to="'/joueur/'+checkIDJ">Rechercher</router-link>
+        <router-link class="white" :to="{ name: 'joueursId', params:{id : checkIDJ, props:{connected:true, admin:true, token: this.$route.params.props.token} } }">Rechercher</router-link>
       </b-button>
     </p>
     <b-table v-if="bool" striped hover :items="joueurList" :fields="fields"></b-table>

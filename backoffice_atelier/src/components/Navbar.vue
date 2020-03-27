@@ -7,12 +7,6 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav v-if="$route.params.props.admin">
-          <b-nav-item href="#">
-            <router-link
-              :to="{ name: 'Accueil', params:{ props:{connected:true, admin:true, show:false, token: this.$route.params.props.token} } }"
-              class="white"
-            >Page d'accueil</router-link>
-          </b-nav-item>
           <b-nav-item-dropdown href="#" text="Joueurs">
             <b-dropdown-item>
               <router-link
@@ -61,12 +55,6 @@
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav v-else>
-          <b-nav-item href="#">
-            <router-link
-              class="white"
-              :to="{ name: 'Accueil', params:{ props:{connected:true, admin:false, show:false, token: this.$route.params.props.token} } }"
-            >Page d'accueil</router-link>
-          </b-nav-item>
           <b-nav-item>
             <router-link
               class="white"
