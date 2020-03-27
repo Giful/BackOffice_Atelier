@@ -28,7 +28,13 @@
           <b-form-input type="number" id="dist" v-model="distance"></b-form-input>
         </b-form-group>
       </b-form-group>
-      <b-button v-if="pos" v-on:click="ajoutSerie" class="btn btn-primary m-t-20">Ajouter une série</b-button>
+      <b-button
+        pill
+        variant="info"
+        v-if="pos"
+        v-on:click="ajoutSerie"
+        class="btn btn-primary m-t-20"
+      >Ajouter une série</b-button>
       <b-alert
         v-if="ok"
         :show="dismissCountDown"
@@ -39,17 +45,6 @@
         variant="success"
       >
         <p>Série ajoutée avec succès</p>
-      </b-alert>
-      <b-alert
-        v-if="ok"
-        :show="dismissCountDown"
-        @dismissed="dismissCountDown=0"
-        @dismiss-count-down="countDownChanged"
-        dismissible
-        class="w-25 mx-auto h-25 mt-3"
-        variant="success"
-      >
-        <p>Erreur lors de l'ajout de la série, vérifiez les paramètres</p>
       </b-alert>
     </b-card>
     <h4
@@ -122,12 +117,8 @@ export default {
           }
         )
         .then(response => {
-          console.log(response.data);
-          if ((response.data.type = "error")) {
-            bool = true;
-          } else {
-            this.ok = true;
-          }
+          this.ok = true;
+          this.dismissCountDown = this.dismissSecs;
         })
         .catch(err => {});
     },
@@ -147,9 +138,7 @@ export default {
         this.center = marker;
         this.currentPlace = null;
         this.pos = true;
-        this.coord = true;
         this.zoom = 15;
-        this.dismissCountDown = this.dismissSecs;
       }
     },
     geolocate: function() {

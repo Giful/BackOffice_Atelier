@@ -30,7 +30,7 @@
       variant="danger"
       show
     >Adresse Mail ou mot de passe incorrect</b-alert>
-    <pre>{{test}}</pre>
+    <p>Test</p>
 </div>
 </template>
 
@@ -70,8 +70,8 @@ export default {
           if (response.data.type === "error") {
             this.err = true;
           } else {
-            if(response.data.role == "a") this.$router.replace({name: "Accueil", params:{ props:{connected:true, admin:true, token: response.data.token} }});
-            else this.$router.replace({name: "Accueil", params:{ props:{connected:true, admin:false, token: response.data.token} }});
+            if(response.data.role == "a") this.$router.replace({name: "Photo", params:{ props:{connected:true, admin:true, token: response.data.token} }});
+            else this.$router.replace({name: "Photo", params:{ props:{connected:true, admin:false, token: response.data.token} }});
           }
         })
         .catch(err => {

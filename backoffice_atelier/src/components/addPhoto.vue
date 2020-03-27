@@ -19,15 +19,14 @@
           <b-form-input id="desc" v-model="description"></b-form-input>
         </b-form-group>
 
-        <b-form-group class="w-75" label-cols-sm="2" label="Choisissez une série:" label-for="url">
+        <b-form-group class="w-75" label-cols-sm="2" label-align-sm="right" label="Choisissez une série:" label-for="ville">
           <b-form-select v-model="selected" :options="tabSerie"></b-form-select>
         </b-form-group>
-        <b-form-group class="w-75" label-cols-sm="2" label="Url de la photo:" label-for="sel">
-          <b-form-input v-if="bool" id="url" v-model="urlImage" class="w-50"></b-form-input>
-          <b-form-file v-else v-model="urlImage" class="w-50"></b-form-file>
+        <b-form-group class="w-75" label-cols-sm="2" label-align-sm="right" label="Url de la photo:" label-for="sel">
           <b-form-select id="sel" v-model="select" :options="options" class="w-25"></b-form-select>
+          <b-form-input v-if="bool" id="url" v-model="urlImage" class="w-75 mx-auto mt-2" placeholder="Url de l'image"></b-form-input>
+          <b-form-file v-else v-model="urlImage" class="w-50"></b-form-file> 
         </b-form-group>
-        <!-- <div class="mt-3">Selected file: {{ urlImage ? urlImage.name : '' }}</div> -->
       </b-form-group>
       <b-button
         pill
@@ -130,7 +129,6 @@ export default {
   },
   watch: {
     select: function() {
-      console.log(this.select);
       if (this.bool) {
         this.bool = false;
         this.urlImage = "";
@@ -163,9 +161,8 @@ export default {
           }
         )
         .then(response => {
-            this.dismissCount = this.dismissSecs;
-            this.add = true;
-          
+          this.dismissCount = this.dismissSecs;
+          this.add = true;
         })
         .catch(err => {});
     },
