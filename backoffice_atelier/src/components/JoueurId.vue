@@ -41,7 +41,7 @@ export default {
   },
   created: function() {
     axios
-        .get("http://localhost:19080/joueurs/" + this.$route.params.id, {
+        .get("http://docketu.iutnc.univ-lorraine.fr:60080/joueurs/" + this.$route.params.id, {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }
@@ -62,7 +62,7 @@ export default {
   methods: {
     afficherJoueur() {
       axios
-        .get("http://localhost:19080/joueurs/" + this.$route.params.id, {
+        .get("http://docketu.iutnc.univ-lorraine.fr:60080/joueurs/" + this.$route.params.id, {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }

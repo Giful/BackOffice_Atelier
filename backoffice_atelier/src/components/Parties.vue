@@ -46,7 +46,7 @@ export default {
   },
   created: function() {
     axios
-      .get("http://localhost:19080/parties?page=" + this.page, {
+      .get("http://docketu.iutnc.univ-lorraine.fr:60080/parties?page=" + this.page, {
         headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }
@@ -80,7 +80,7 @@ export default {
     afficherPagePrec() {
       this.partiesData = [];
       axios
-        .get("http://localhost:19080/parties?page=" + (this.page - 1), {
+        .get("http://docketu.iutnc.univ-lorraine.fr:60080/parties?page=" + (this.page - 1), {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }
@@ -107,7 +107,7 @@ export default {
     afficherPageSuiv() {
       this.partiesData = [];
       axios
-        .get("http://localhost:19080/parties?page=" + (this.page + 1), {
+        .get("http://docketu.iutnc.univ-lorraine.fr:60080/parties?page=" + (this.page + 1), {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }

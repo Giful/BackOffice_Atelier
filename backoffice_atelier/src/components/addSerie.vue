@@ -101,7 +101,7 @@ export default {
     ajoutSerie() {
       axios
         .post(
-          "http://localhost:19080/series",
+          "http://docketu.iutnc.univ-lorraine.fr:60080/series",
           {
             ville: this.ville,
             lat: this.lat,

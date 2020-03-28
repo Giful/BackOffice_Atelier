@@ -56,7 +56,7 @@ export default {
   methods: {
     afficherPartie() {
       axios
-        .get("http://localhost:19080/parties/" + this.$route.params.id, {
+        .get("http://docketu.iutnc.univ-lorraine.fr:60080/parties/" + this.$route.params.id, {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
             }

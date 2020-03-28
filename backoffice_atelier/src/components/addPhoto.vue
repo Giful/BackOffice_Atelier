@@ -145,7 +145,7 @@ export default {
     ajoutPhoto() {
       axios
         .post(
-          "http://localhost:19080/photos",
+          "http://docketu.iutnc.univ-lorraine.fr:60080/photos",
           {
             descr: this.description,
             url: this.urlImage,

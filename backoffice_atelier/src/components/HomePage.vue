@@ -30,7 +30,6 @@
       variant="danger"
       show
     >Adresse Mail ou mot de passe incorrect</b-alert>
-    <p>Test</p>
 </div>
 </template>
 
@@ -46,7 +45,7 @@ export default {
     return {
       pwd:"",
       mail:"",
-      url: "http://localhost:19080/joueurs/auth",
+      url: "http://docketu.iutnc.univ-lorraine.fr:60080/joueurs/auth",
       show: true,
       token: null,
       msgErreur:"",

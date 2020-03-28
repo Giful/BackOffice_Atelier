@@ -46,7 +46,7 @@ export default {
   created: function() {
     axios
       .get(
-        "http://localhost:19080/joueurs/" + this.$route.params.id + "/parties"
+        "http://docketu.iutnc.univ-lorraine.fr:60080/joueurs/" + this.$route.params.id + "/parties"
       , {
         headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
@@ -71,7 +71,7 @@ export default {
     afficherPartiesJ() {
       axios
         .get(
-          "http://localhost:19080/joueurs/" + this.$route.params.id + "/parties"
+          "http://docketu.iutnc.univ-lorraine.fr:60080/joueurs/" + this.$route.params.id + "/parties"
         , {
           headers: { 
                 "Authorization": "Bearer " + this.$route.params.props.token
