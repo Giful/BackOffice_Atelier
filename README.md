@@ -24,8 +24,16 @@ npm run dev
 
 Utilisez un compte déjà créé :
 
+Compte administateur (Ajout de série(s) et photo(s) + Accès à différentes informations)
 Adresse mail :
 > admin@admin.com
 
 Mot de passe :
 > admin
+
+Compte Utilisateur (Ajout de série(s) et photo(s))
+Adresse mail :
+> user@user.com
+
+Mot de passe :
+> user
