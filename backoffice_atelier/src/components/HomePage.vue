@@ -25,7 +25,7 @@
       <b-button pill type="submit" variant="info">Se connecter</b-button>
     </b-form>
     <b-alert
-      v-if="err & show"
+      v-model="err"
       class="w-25 mx-auto h-25 mt-3"
       variant="danger"
       show
@@ -74,7 +74,7 @@ export default {
           }
         })
         .catch(err => {
-          this.msgErreur = "Adresse mail ou mot de passe incorrect";
+          this.err = true;
         });
     },
   }
